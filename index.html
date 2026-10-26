@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Topper Revision</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #101010;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+header {
+  background: #191919;
+  padding: 25px 15px;
+  text-align: center;
+  border-bottom: 2px solid gold;
+}
+h1, h2 { color: gold; }
+.container { padding: 20px; }
+.card {
+  background: #202020;
+  border: 1px solid #b89630;
+  border-radius: 15px;
+  padding: 18px;
+  margin-bottom: 15px;
+}
+button {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: none;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏆 TOPPER REVISION</h1>
+  <p>UP Board | Class 10th & 12th</p>
+</header>
+
+<div class="container">
+
+  <h2>📚 Select Your Class</h2>
+
+  <div class="card">
+    <h3>Class 10th</h3>
+    <button onclick="showClass('10th')">
+      Explore Books
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>Class 12th</h3>
+    <button onclick="showClass('12th')">
+      Explore Books
+    </button>
+  </div>
+
+  <h2>🔍 Search PDF</h2>
+  <input id="search" placeholder="Search notes..."
+         oninput="searchNotes()">
+
+  <h2>📄 Study Materials</h2>
+  <div id="notes"></div>
+
+  <h2>👤 Student Login</h2>
+  <div class="card">
+    <input placeholder="Student Name">
+    <button onclick="alert('Demo only')">
+      Login
+    </button>
+  </div>
+
+</div>
+
+<script>
+const materials = [
+  {name:"Math Revision", price:0, cls:"10th"},
+  {name:"Science Notes", price:30, cls:"10th"},
+  {name:"Physics Notes", price:40, cls:"12th"},
+  {name:"Chemistry Revision", price:50, cls:"12th"}
+];
+
+let selectedClass = "";
+
+function render(items) {
+  document.getElementById("notes").innerHTML =
+    items.map(item => `
+      <div class="card">
+        <h3>${item.name}</h3>
+        <p>Class ${item.cls}</p>
+        <p>${item.price === 0 ? "FREE" : "₹" + item.price}</p>
+        <button onclick="alert('PDF will be added soon')">
+          Preview PDF
+        </button>
+      </div>
+    `).join("") || "<p>No notes found.</p>";
+}
+
+function showClass(cls) {
+  selectedClass = cls;
+  searchNotes();
+}
+
+function searchNotes() {
+  const query = document.getElementById("search")
+    .value.toLowerCase();
+
+  render(materials.filter(item =>
+    (!selectedClass || item.cls === selectedClass) &&
+    item.name.toLowerCase().includes(query)
+  ));
+}
+
+render(materials);
+</script>
+
+</body>
+</html>
